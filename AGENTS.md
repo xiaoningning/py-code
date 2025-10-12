@@ -1,19 +1,23 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-Keep all production code in `src/`. Each challenge or feature belongs in its own module, e.g., `src/two_sum.py`. Group shared utilities inside subpackages to avoid long import chains. Place exploratory notebooks or scratch work outside the repo. Add tests under `tests/`, mirroring the source tree so `tests/test_two_sum.py` exercises `src/two_sum.py`. Commit generated assets or data files only when they are deterministic and under version control limits.
+Keep all production code in `src/`. Each challenge or feature belongs in its own aptly named module, e.g., `src/two_sum.py`. Group reusable helpers under subpackages to limit long relative imports. Place tests in `tests/` mirroring the source tree (`tests/test_two_sum.py` covers `src/two_sum.py`). Exclude ad-hoc notebooks or datasets from version control unless they are reproducible and under size limits.
 
 ## Build, Test, and Development Commands
-Run formatters before every commit:
-- `black src` — normalize Python formatting.
-- `isort src` — organize imports.
-Lint and type-check with `flake8 src`. Execute the full regression suite with `pytest`. If you need an isolated run, use `pytest tests/test_two_sum.py -k scenario_name`. Install dependencies with `python -m pip install -r requirements.txt` once that file is updated for new tooling.
+Install tooling with `python -m pip install -r requirements.txt` (Python 3.12+). Run formatters before every commit:
+- `black src` — normalize code layout.
+- `ruff check src --fix` — apply Ruff’s lint, import, and correctness rules.
+- `ruff format src` — align with Ruff’s 2025-compatible Black parity.
+Execute the regression suite with `pytest`. Scope runs with `pytest tests/test_two_sum.py -k scenario_name`. Capture coverage data using `pytest --cov=src --cov-report=term`.
 
 ## Coding Style & Naming Conventions
-Use Python 3.11+ features responsibly (type hints, structural pattern matching). Follow Black’s defaults (4-space indents, double quotes where rewritten). Prefer `snake_case` for files and symbols—avoid leading digits or hyphens in filenames so modules import cleanly. Keep functions small and pure; add docstrings that clarify intent and edge cases. Align imports per `isort` and keep linting quiet; fix warnings rather than silencing them.
+Target modern Python (3.12/3.13) idioms: prefer `match` for structured branching, `dataclasses` or `typing.TypedDict` for data modeling, and `typing.Self`/`TypeAliasType` when useful. Start new modules with `from __future__ import annotations` for postponed evaluation. Stick to `snake_case` for files and symbols; keep filenames import-safe (avoid leading digits or hyphens). Functions should remain small and pure with docstrings describing intent and edge conditions. Let Ruff enforce lint rules—treat warnings as bugs rather than muting them.
 
 ## Testing Guidelines
-Write `pytest` tests for every new behavior. Name files `test_<module>.py` and match test functions to the code they cover. Include edge cases (empty inputs, large values) and regression tests for previously reported bugs. Measure coverage locally with `pytest --cov=src --cov-report=term`. Do not merge changes unless the suite passes without xfails.
+Write `pytest` tests for every behavior change. Name files `test_<module>.py` and keep assertions focused on observable outcomes. Cover edge cases (empty collections, large inputs, invalid types) and add regression tests for any bug you fix. When introducing async code, use `pytest.mark.asyncio`. Do not merge until `pytest` and coverage checks succeed locally without `xfail`.
 
 ## Commit & Pull Request Guidelines
-Craft concise, present-tense commit messages (`solve two sum`, `add flake8`). Keep commits focused; split unrelated work. Pull requests should explain the motivation, outline the solution, and link any tracking issues. Provide reproduction steps for bug fixes and command output or screenshots when UI or CLI behavior changes. Confirm that formatters, linters, and tests have run successfully before requesting review.
+Craft concise, present-tense commit messages (`solve two sum`, `wire ruff check`). Keep commits scoped to a single concern. Pull requests should summarize motivation, outline the solution, and link tracking issues. Include reproduction steps for bug fixes and terminal output or screenshots when behavior changes. Confirm formatters, Ruff, and tests all pass before requesting review.
+
+## 2025 Python Best Practices
+Configure shared tooling in `pyproject.toml` when the project grows—Ruff, Black parity, and pytest all read from it. Favor lightweight, composable functions over inheritance-heavy designs. Use `pydantic` or `attrs` only when validation is required; otherwise lean on dataclasses plus type hints. Prefer context managers and `pathlib.Path` for IO, and guard CLI entry points with `if __name__ == "__main__":` so modules stay importable for testing.
