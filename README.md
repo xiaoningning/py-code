@@ -17,3 +17,11 @@ isort src/.
 ```sh
 flake8 src/.
 ```
+
+- Ruff = format + lint + fix
+
+```sh
+ruff check --fix .
+ruff format .
+pytest
+```

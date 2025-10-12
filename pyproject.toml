@@ -1,0 +1,46 @@
+[project]
+name = "python fun"
+version = "0.1.0"
+description = "A simple Python fun"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+
+
+# -----------------------------
+# 🔧 Formatting and linting tools
+# -----------------------------
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+skip-string-normalization = false
+
+[tool.flake8]
+max-line-length = 100
+ignore = [
+    "E203",  # whitespace before ':'
+    "E266",  # too many leading '#' for block comment
+    "E501",  # line too long handled by Black
+    "W503",  # line break before binary operator
+]
+exclude = [".git", "__pycache__", "venv", ".venv", "build", "dist"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+fix = true
+lint.select = ["E", "F", "I", "N", "UP", "B"]
+lint.ignore = ["E501", "E203", "W503"]
+exclude = [".git", "__pycache__", "venv", ".venv", "build", "dist"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = ["tests"]
