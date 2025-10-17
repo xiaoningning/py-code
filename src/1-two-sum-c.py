@@ -40,7 +40,7 @@ if __name__ == "__main__":
     print("Result:", solver1.find_two_sum())
 
     # Example 2: no solution
-    solver2 = TwoSum([1, 2, 3], 10)
+    solver2 = TwoSum1([1, 2, 3], 10)
     print(solver2)
     try:
         print("Result:", solver2.find_two_sum())
