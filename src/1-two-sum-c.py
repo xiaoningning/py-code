@@ -17,6 +17,21 @@ class TwoSum:
     def __str__(self) -> str:
         return f"TwoSum(nums={self.nums}, target={self.target})"
 
+class TwoSum1:
+    def __init__(self, nums: list[int], target: int):
+        self.nums = nums
+        self.target = target
+    
+    def find_two_sum(self) -> list[int]:
+        seen = {}
+        for i, n in enumerate(self.nums):
+            if (m := self.target - n) in seen:
+                return [seen[m], i]
+            seen[n] = i
+        raise ValueError(f"no two nums sum to {self.target}")
+    
+    def __str__(self) -> str:
+        return f"TwoSum1 (nums = {self.nums}), target = {self.target}"
 
 if __name__ == "__main__":
     # Example 1: has solution
@@ -31,3 +46,7 @@ if __name__ == "__main__":
         print("Result:", solver2.find_two_sum())
     except ValueError as e:
         print("Error:", e)
+
+    solver3 = TwoSum1([2, 7, 11, 15], 9)
+    print(solver3)
+    print(f"result: {solver3.find_two_sum()}")
