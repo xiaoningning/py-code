@@ -18,4 +18,5 @@ if __name__ == '__main__':
     nums = [1,3,-1,-3,5,3,6,7]
     k = 3
     r = Solution().maxSlidingWindow(nums, k)
-    assert r == [3, 3, 5, 5, 6, 7], "failed"
+    expected = [3, 3, 5, 5, 6, 7]
+    assert r == expected, f"expected {expected}, got {r}"
