@@ -2,7 +2,7 @@ from collections import deque
 
 
 class Solution:
-    def maxSlidingWindow(self, nums: list[int], k: int) -> list[int]:
+    def maxSlidingWindow(self, nums: list[int], k: int) -> list[int]: # noqa: N802
         res = []
         q = deque()
 
