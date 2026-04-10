@@ -17,7 +17,6 @@ class Solution:
             for _ in range(len(q)):
                 # print(q)
                 row, col = q.popleft()
-
                 if row == n - 1 and col == n - 1:
                     return dist
 
@@ -59,7 +58,7 @@ class Solution:
                         q.append((i, j, d + 1))
         
         return -1
-    
+
 
 if __name__ == '__main__':
     m1 = [
