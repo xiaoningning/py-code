@@ -9,7 +9,7 @@ class Solution:
         if grid[0][0] != 0 or grid[-1][-1] != 0:
             return -1
 
-        dist = 0
+        dist = 1
         q = deque([(0, 0)])
         grid[0][0] = 1 # mark as visited
 
@@ -39,8 +39,8 @@ class Solution:
             return -1
         
         n = len(grid)
-        q = deque([(0,0,0)])
-        grid[0][0] = 1
+        q = deque([(0,0,1)])
+        grid[0][0] = 1 # visit = set((0, 0))
 
         while q:
             # print(q)
@@ -58,6 +58,25 @@ class Solution:
                         q.append((i, j, d + 1))
         
         return -1
+    
+    def shortestPathBinaryMatrix3(self, grid: list[list[int]]) -> int:  # noqa: N802
+        if grid[0][0] == 1 or grid[-1][-1] == 1 : return -1
+
+        N = len(grid)
+        q = deque([(0, 0, 1)]) # r, c, dist
+        grid[0][0] = 1 # marked as visited
+        directions = [[0, 1], [1, 0], [0, -1], [-1, 0], [1, -1], [-1, 1]] # no diagonal direction
+
+        while q:
+            r, c, dist = q.popleft()
+            if r == N - 1 and c == N - 1: return dist
+
+            for dr, dc in directions:
+                if 0 <= r + dr < N and 0 <= c + dc < N and grid[r + dr][c + dc] == 0:
+                    grid[r + dr][c + dc] = 1
+                    q.append((r + dr, c + dc, dist + 1))
+        
+        return -1
 
 
 if __name__ == '__main__':
@@ -66,6 +85,21 @@ if __name__ == '__main__':
         [1, 0, 0],
         [1, 0, 0],
     ]
-
-    r = Solution().shortestPathBinaryMatrix2(m1)
+    r = Solution().shortestPathBinaryMatrix(m1)
+    
+    m2 = [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 0, 0],
+    ]
+    r2 = Solution().shortestPathBinaryMatrix2(m2)
+    
+    m3 = [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 0, 0],
+    ]
+    r3 = Solution().shortestPathBinaryMatrix3(m3)
     print(f"shortest path: {r}")
+    print(f"shortest path: {r2}")
+    print(f"shortest path: {r3}")
