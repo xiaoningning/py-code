@@ -72,9 +72,10 @@ class Solution:
             if r == N - 1 and c == N - 1: return dist
 
             for dr, dc in directions:
-                if 0 <= r + dr < N and 0 <= c + dc < N and grid[r + dr][c + dc] == 0:
-                    grid[r + dr][c + dc] = 1
-                    q.append((r + dr, c + dc, dist + 1))
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < N and 0 <= nc < N and grid[nr][nc] == 0:
+                    grid[nr][nc] = 1
+                    q.append((nr, nc, dist + 1))
         
         return -1
 
