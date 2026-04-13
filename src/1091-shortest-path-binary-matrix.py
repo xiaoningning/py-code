@@ -78,6 +78,27 @@ class Solution:
                     q.append((nr, nc, dist + 1))
         
         return -1
+    
+    def shortestPathBinaryMatrix4(self, grid: list[list[int]]) -> int:  # noqa: N802
+        if grid[0][0] == 1 or grid[-1][-1] == 1 : return -1
+
+        N = len(grid)
+        q = deque([(0, 0, 1)]) # r, c, dist
+        visited = set((0,0))
+        directions = [[0, 1], [1, 0], [0, -1], [-1, 0], [1, -1], [-1, 1]] # no diagonal direction
+
+        while q:
+            for _ in range(len(q)):
+                r, c, dist = q.popleft()
+                if r == N - 1 and c == N - 1:
+                    return dist
+                
+                for dr, dc in directions:
+                    nr, nc = r + dr, c + dc
+                    if 0 <= nr < N and 0 <= nc < N and grid[nr][nc] == 0:
+                        q.append((nr, nc, dist + 1))
+        
+        return -1
 
 
 if __name__ == '__main__':
@@ -101,6 +122,15 @@ if __name__ == '__main__':
         [1, 0, 0],
     ]
     r3 = Solution().shortestPathBinaryMatrix3(m3)
+
+    m4 = [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 0, 0],
+    ]
+    r4 = Solution().shortestPathBinaryMatrix4(m4)
+
     print(f"shortest path: {r}")
     print(f"shortest path: {r2}")
     print(f"shortest path: {r3}")
+    print(f"shortest path: {r4}")
