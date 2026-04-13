@@ -23,7 +23,7 @@ class Solution:
                 for dr in range(-1, 2):
                     for dc in range(-1, 2):
                         # no diagonal move
-                        if dr == 1 and dc == 1:
+                        if (dr == 1 and dc == 1):
                             continue
 
                         nr, nc = row + dr, col + dc
