@@ -96,6 +96,7 @@ class Solution:
                 for dr, dc in directions:
                     nr, nc = r + dr, c + dc
                     if 0 <= nr < N and 0 <= nc < N and grid[nr][nc] == 0:
+                        visited.add(nr, nc)
                         q.append((nr, nc, dist + 1))
         
         return -1
